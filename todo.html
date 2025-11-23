@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List - Event Delegation</title>
+</head>
+<body>
+  <h2>My Todo List</h2>
+  
+  <input type="text" id="taskInput" placeholder="Enter task">
+  <button id="addBtn">Add Task</button>
+
+  <ul id="taskList">
+    <!-- tasks will be added here -->
+  </ul>
+
+  <script>
+    const addBtn = document.getElementById("addBtn");
+    const taskInput = document.getElementById("taskInput");
+    const taskList = document.getElementById("taskList");
+
+    // Add new task
+    addBtn.addEventListener("click", () => {
+      const taskText = taskInput.value.trim();
+      if (taskText === "") return;
+
+      const li = document.createElement("li");
+      li.innerHTML = `${taskText} <button class="delete">❌</button>`;
+      taskList.appendChild(li);
+      taskInput.value = "";
+    });
+
+    // Event Delegation: listen on parent (taskList)
+    taskList.addEventListener("click", (event) => {
+      if (event.target.classList.contains("delete")) {
+        event.target.parentElement.remove(); // remove the li
+      }
+    });
+  </script>
+</body>
+</html>
